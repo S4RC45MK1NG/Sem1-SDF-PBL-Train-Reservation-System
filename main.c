@@ -60,6 +60,8 @@ void insert_file(struct TRAIN train, int pos) {
     printf("size of trains_data = %d\n", sizeof(trains_data));
     printf("size of struct = %d\n", sizeof(struct TRAIN));
 
+    printf("===============================================\n");
+    printf("===============================================\n");
     for(int i=0; i < size; i++) {
         
         printf("===============================================\n");
@@ -67,6 +69,7 @@ void insert_file(struct TRAIN train, int pos) {
         printf("\n===============================================");
         getchar();
     }
+    printf("\n===============================================");
 
     printf("\n\n\n");
     struct TRAIN *updated_data = (struct TRAIN *) malloc(++size * sizeof(*trains_data));
@@ -83,14 +86,17 @@ void insert_file(struct TRAIN train, int pos) {
     
         counter++; i++;
     }
-
+    
+    printf("===============================================\n");
+    printf("===============================================\n");
     for(int i=0; i < size; i++) {
         
-        printf("===============================================\n");
+        
         printf("ID:%d\nName:%s", updated_data[i].id, updated_data[i].name);
         printf("\n===============================================");
         getchar();
     }
+    printf("\n===============================================");
     
 }
 
@@ -118,16 +124,67 @@ void read_file() {
 }
 
 
+// For testing
+void cli_menu_loop() {
+    int quit = 0;
+    while (!quit) {
+        int inp = 0;
+        struct TRAIN temp;
+        int pos = 0;
+        
+        printf("enter operation:\n");
+        printf("1.append\n2.read\n3.insert\n");
+        scanf("%d", &inp);
+
+        switch (inp) {
+
+            case 1:
+            printf("ID: ");
+            scanf("%d", &temp.id);
+            getchar();
+            printf("Name: ");
+            char chr = 'a';
+            int i=0;
+            while(chr != '\n') {
+                chr = getchar();
+                temp.name[i] = chr;
+                printf("%c", chr);
+                i++;
+            }
+            temp.name[i-1] = '\0';
+            
+            append_file(temp);
+            break;
+
+            
+            case 2:
+            read_file();
+            break;
+
+
+            case 3:
+            printf("ID: ");
+            scanf("%d", &temp.id);
+            printf("Name: ");
+            scanf("%d", temp.name);
+            printf("Position: ");
+            scanf("%d", &pos);            
+            
+            insert_file(temp, pos);
+            break;
+            
+            default:
+            printf("exitting program...");
+            quit = 1;
+        }
+
+    }
+}
+
+
 int main() {
     write_file();
-
-
-    struct TRAIN x1 = {4233252, "idk vro express"};
-    struct TRAIN x2 = {13546234, "dumahh express"};
-    struct TRAIN x3 = {1269433, "git inserted boi express"};
-    append_file(x1);
-    append_file(x2);
-    insert_file(x3, 1);
+    cli_menu_loop();
 
     return 0;
 }
